@@ -4,6 +4,7 @@ import uvicorn
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
+from api.consumer import consumer_router
 from api.produce import produce_router
 
 app = FastAPI()
@@ -16,7 +17,8 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-app.include_router(produce_router, prefix="/api/kafka", tags=["Kafka produce"])
+app.include_router(produce_router, prefix="/api/kafka/produce", tags=["Kafka produce"])
+app.include_router(consumer_router, prefix="/api/kafka/consume", tags=["Kafka consume"])
 
 
 if __name__ == "__main__":
