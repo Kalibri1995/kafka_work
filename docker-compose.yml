@@ -92,7 +92,7 @@ services:
       KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: http://kafka-connect:8083
 
   kafka-connect:
-    image: confluentinc/cp-kafka-connect:latest
+    build: .
     container_name: kafka-connect
     depends_on:
       - kafka1
@@ -110,7 +110,7 @@ services:
       CONNECT_STATUS_STORAGE_TOPIC: "kafka-connect-status"
       CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.storage.StringConverter"
       CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.storage.StringConverter"
-      CONNECT_PLUGIN_PATH: "/usr/local/share/kafka/plugins,/usr/share/filestream-connectors"  # Добавляем путь к плагинам
+      CONNECT_PLUGIN_PATH: "/usr/local/share/kafka/plugins,/usr/share/filestream-connectors,/usr/share/java,/usr/share/confluent-hub-components"  # Добавляем путь к плагинам
     volumes:
       - ./alert.txt:/data/alert.txt  # указываем путь, где будет лежать файл для чтения
       - ./alert-sink.txt:/data/alert-sink.txt  # указываем путь, где будет лежать файл для записи
