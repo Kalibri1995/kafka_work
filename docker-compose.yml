@@ -91,7 +91,7 @@ services:
       KAFKA_CLUSTERS_0_NAME: local-cluster
       KAFKA_CLUSTERS_0_BOOTSTRAP_SERVERS: kafka1:9092,kafka2:9093,kafka3:9094
       KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: http://kafka-connect:8083
-      KAFKA_CLUSTERS_0_KAFKASCHEMAREGISTRY_0_ADDRESS: http://schema-registry:8081
+      KAFKA_CLUSTERS_0_KAFKASCHEMAREGISTRY_0_ADDRESS: http://schema-registry:28081
 
   kafka-connect:
     build: .
@@ -113,10 +113,10 @@ services:
       CONNECT_KEY_CONVERTER: "io.confluent.connect.avro.AvroConverter"
       CONNECT_VALUE_CONVERTER: "io.confluent.connect.avro.AvroConverter"
       CONNECT_PLUGIN_PATH: "/usr/local/share/kafka/plugins,/usr/share/filestream-connectors,/usr/share/java,/usr/share/confluent-hub-components"  # Добавляем путь к плагинам
-      CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
-      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+      CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:28081
+      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:28081
     volumes:
-      - ./alert.txt:/data/alert.txt  # указываем путь, где будет лежать файл для чтения
+      - C:/Users/workg/Projects/certificate/certification_api/logfile.log:/data/logfile.log  # указываем путь, где будет лежать файл для чтения
       - ./alert-sink.txt:/data/alert-sink.txt  # указываем путь, где будет лежать файл для записи
 
   schema-registry:
@@ -127,12 +127,11 @@ services:
       - kafka2
       - kafka3
     ports:
-      - "8081:8081"
+      - "28081:28081"
     environment:
-      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: "kafka1:9092,kafka2:9093,kafka3:9094"
-      SCHEMA_REGISTRY_LISTENER_HTTP_PORT: 8081
-      SCHEMA_REGISTRY_LISTENER_HTTP_HOSTNAME: 0.0.0.0
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: "PLAINTEXT://kafka1:9092,PLAINTEXT://kafka2:9093,PLAINTEXT://kafka3:9094"
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:28081
     volumes:
       - schema-registry-data:/var/lib/schema-registry
 

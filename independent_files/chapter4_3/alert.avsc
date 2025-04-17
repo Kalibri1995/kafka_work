@@ -1,0 +1,11 @@
+{
+  "type": "record",
+  "name": "Alert",
+  "namespace": "com.kinaction",
+  "fields": [
+    {"name": "alertId", "type": "int"},
+    {"name": "stageId", "type": "string"},
+    {"name": "alertLevel", "type": "string"},
+    {"name": "alertMessage", "type": "string"}
+  ]
+}
